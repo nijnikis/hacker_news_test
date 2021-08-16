@@ -1,0 +1,31 @@
+.story-card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.story-img-container{
+    padding: 0 0 20px 20px;
+}
+.story-img{}
+.story-title{
+    padding: 0 0 10px 0;
+    font-size: 16px;
+}
+.story-url{
+    padding: 0 0 10px 0;
+    color: #b6e5e6;
+    word-break: break-word;
+}
+.story-time{
+    padding: 0 0 5px 0;
+}
+.story-author-score{}
+.story-author-id{}
+.story-author-karma{}
+
+
+@media only screen and (max-width: 767px){
+    .story-img-container{
+        padding: 0 0 10px 10px;
+    }
+}
