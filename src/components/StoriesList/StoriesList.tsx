@@ -41,7 +41,7 @@ export const StoriesList: React.FC = () => {
         const storiesAllIds = await storiesAllIdsResponse.json();
         const storiesIds: number[] = storiesAllIds.slice(0, 10);
         if (storiesIds.length > 0) {
-            const stories = await Promise.all(storiesIds.map(async (storyId: number) => {
+            const storiesUnsorted = await Promise.all(storiesIds.map(async (storyId: number) => {
                 const storyDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`);
                 const storyData: IStoryData = await storyDataResponse.json();
                 const authorDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/user/${storyData.by}.json`);
@@ -56,6 +56,7 @@ export const StoriesList: React.FC = () => {
                     karma: authorData.karma,
                 };
             }));
+            const stories = await storiesUnsorted.sort((a, b) => b.score - a.score);
             setStories(stories);
         }
     }
