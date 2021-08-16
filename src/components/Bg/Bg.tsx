@@ -9,7 +9,7 @@ export const Bg: React.FC = () => (
                 const galaxies = [];
                 for (let i = 0; i < 6; i++) {
                     galaxies.push(
-                        <div className="bg__space-galaxy-float-x-engine">
+                        <div key={i} className="bg__space-galaxy-float-x-engine">
                             <div className="bg__space-galaxy-float-y-engine">
                                 <div className="home-bg__space-galaxy"></div>
                             </div>

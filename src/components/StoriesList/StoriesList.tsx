@@ -37,27 +37,31 @@ export const StoriesList: React.FC = () => {
     }, [])
 
     async function getStories() {
-        const storiesAllIdsResponse = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
-        const storiesAllIds = await storiesAllIdsResponse.json();
-        const storiesIds: number[] = storiesAllIds.slice(0, 10);
-        if (storiesIds.length > 0) {
-            const storiesUnsorted = await Promise.all(storiesIds.map(async (storyId: number) => {
-                const storyDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`);
-                const storyData: IStoryData = await storyDataResponse.json();
-                const authorDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/user/${storyData.by}.json`);
-                const authorData: IAuthorData = await authorDataResponse.json();
-                return {
-                    id: storyId,
-                    title: storyData.title,
-                    url: storyData.url,
-                    time: storyData.time,
-                    score: storyData.score,
-                    authorId: authorData.id,
-                    karma: authorData.karma,
-                };
-            }));
-            const stories = await storiesUnsorted.sort((a, b) => b.score - a.score);
-            setStories(stories);
+        try {
+            const storiesAllIdsResponse = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json');
+            const storiesAllIds = await storiesAllIdsResponse.json();
+            const storiesIds: number[] = storiesAllIds.slice(0, 10);
+            if (storiesIds.length > 0) {
+                const storiesUnsorted = await Promise.all(storiesIds.map(async (storyId: number) => {
+                    const storyDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`);
+                    const storyData: IStoryData = await storyDataResponse.json();
+                    const authorDataResponse = await fetch(`https://hacker-news.firebaseio.com/v0/user/${storyData.by}.json`);
+                    const authorData: IAuthorData = await authorDataResponse.json();
+                    return {
+                        id: storyId,
+                        title: storyData.title,
+                        url: storyData.url,
+                        time: storyData.time,
+                        score: storyData.score,
+                        authorId: authorData.id,
+                        karma: authorData.karma,
+                    };
+                }));
+                const stories = await storiesUnsorted.sort((a, b) => b.score - a.score);
+                setStories(stories);
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 

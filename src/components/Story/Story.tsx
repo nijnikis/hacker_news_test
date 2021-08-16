@@ -24,7 +24,7 @@ export const Story: React.FC<StoryProps> = ({ story }) => {
     return (
         <div className="story-card">
             <div className="story-img-container">
-                <img className="story-img" src={reactLogo} alt={`Story ${story.id} image`} />
+                <img className="story-img" src={reactLogo} alt={`Story ${story.id}`} />
             </div>
             <p className="story-title">{story.title}</p>
             <p className="story-url">{story.url}</p>
